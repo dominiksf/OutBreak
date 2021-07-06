@@ -22,7 +22,7 @@ public class House extends Block implements HouseInterface {
 		if (hasVacancy()) {
 			GameBoard.people.remove(person);
 		} else {
-			Collidable.dectectRectCollision(this, person);
+			Collidable.detectRectCollision(this, person);
 		}
 
 	}

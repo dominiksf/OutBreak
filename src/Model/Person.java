@@ -37,8 +37,8 @@ public class Person {
 		new Thread(() -> {
 			while (true) {
 				makeStep();
-				Collidable.dectectSideCollision(this);
-				Collidable.dectectRectCollision(gameBoard.paddle,this);
+				Collidable.detectSideCollision(this);
+				Collidable.detectRectCollision(gameBoard.paddle,this);
 				try {
 					Thread.sleep(1000 / 60);
 				} catch (InterruptedException e) {

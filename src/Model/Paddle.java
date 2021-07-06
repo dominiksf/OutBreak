@@ -4,7 +4,6 @@ package Model;
 import View.GameBoardUI;
 
 public class Paddle implements Collidable {
-	// public Shape shape = Shape.RECT;
 
 	/**
 	 * All Paddle parameters are relative (between 0 and 1)
@@ -92,45 +91,5 @@ public class Paddle implements Collidable {
 	public void collide(Person person, int surfaceDirection) {
 		person.collide(surfaceDirection);
 	}
-//
-//
-//	public double getxPos() {
-//		return this.xPos;
-//	}
-//
-//	public double getYPos() {
-//		return this.yPos;
-//	}
-
-/*
-	// Ball trifft am rechten Rand auf -> wird nach rechts oben abgelenkt
-
-	public void collide(Person person, int direction) {
-
-
-		// Person ist auf Höhe des Paddles
-		if (person.getyPosition() == 1 - paddleWidth) {
-
-
-			// Ball trifft mittig auf -> wird nach oben zurück geschleudert ohne Winkeländerung
-			if (person.getxPosition() == this.xPos) {
-				person.getDirection() = (person.getDirection() + 180) % 360;
-
-				// Ball trifft nicht vollständig mittig auf und wird daher entsprechend abgelenkt
-			} else {
-				// senkrecht nach oben
-				person.direction = (person.getDirection() + 180) % 360;
-
-				// ablenken
-
-
-			}
-
-			}
-
-
-
-		}
-*/
 }
 

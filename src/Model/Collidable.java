@@ -21,7 +21,7 @@ public interface Collidable {
     /**
      * Detects collisions for every Person on the gameboard and changes their directions accordingly
      */
-    static boolean dectectRectCollision(Collidable collider, Person person) { //Statische Methode, kann überall aufgerufen werden, testet kollision zwischen Person und Collidable
+    static boolean detectRectCollision(Collidable collider, Person person) { //Statische Methode, kann überall aufgerufen werden, testet kollision zwischen Person und Collidable
         double test = person.getyPosition() - Person.getR();
         double test2 = person.getyPosition() + Person.getR();
         if (isInRange(collider.getPosition()[0],
@@ -62,7 +62,7 @@ public interface Collidable {
         return false;
     }
 
-    static boolean dectectSideCollision(Person person) {
+    static boolean detectSideCollision(Person person) {
         int d = 1; //sagt ob der radius addiert oder subtrahiert werden muss
         int s = 1; // besagt ob x (0) oder y (1) koordinate für die berechnung relevant ist
         int p = 0;
@@ -147,8 +147,6 @@ public interface Collidable {
                 h = -1;
             }
         }
-        double test = Math.abs(person.getxPosition() + w * Person.getR() - point[0]);
-        double test1 = Math.abs(person.getyPosition() + h * Person.getR() - point[1]);
         if (
                 Math.abs(person.getxPosition() + w * Person.getR() - point[0])
                         > Math.abs(person.getyPosition() + h * Person.getR() - point[1])
@@ -169,28 +167,9 @@ public interface Collidable {
         if (hasVacancy) {
 			GameBoard.people.remove(person);
 		} else {
-			Collidable.dectectRectCollision(house, person);
+			Collidable.detectRectCollision(house, person);
 		}
         
     }
-/**
-    static void main(String[] args){
-        Collidable.dectectRectCollision(new Collidable() {
-            @Override
-            public double[] getDimensions() {
-                return new double[]{0.2,0.1};
-            }
 
-            @Override
-            public double[] getPosition() {
-                return new double[]{0.2,0.1};
-            }
-
-            @Override
-            public void collide(Person person, int surfaceDirection) {
-                System.out.println("Collision " + surfaceDirection);
-            }
-        }, new Person(true,0.2,0.095+Person.getR(),305));
-    }
- */
 }
