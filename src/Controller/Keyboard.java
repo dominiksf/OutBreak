@@ -34,8 +34,4 @@ public class Keyboard implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 
 	}
-
-	public void setPaddle(Paddle paddle) {
-		this.paddle = paddle;
-	}
 }

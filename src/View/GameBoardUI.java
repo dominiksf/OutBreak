@@ -1,16 +1,13 @@
 package View;
 
-import java.awt.*;
-import java.util.List;
-
-import Controller.AudioPlayer;
-import Model.Block;
-import Model.Collidable;
 import Controller.GameBoard;
+import Model.Block;
 import Model.Paddle;
 import Model.Person;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.List;
 
 public class GameBoardUI extends JPanel {
 
@@ -41,8 +38,6 @@ public class GameBoardUI extends JPanel {
 	 */
 	public GameBoardUI(GameBoard gameBoard) {
 		this.gameBoard = gameBoard;
-		gameBoard.generatePaddle();
-		paddle = new Paddle(0.5);
 		people = gameBoard.people;
 		blocks = gameBoard.blocks;
 		setBackground(BACKGROUND_COLOR);
@@ -54,8 +49,7 @@ public class GameBoardUI extends JPanel {
 		jFrame.setTitle("OUTBREAK - THE GAME"); //Name des Fensters
 		jFrame.add(this);
 		jFrame.setVisible(true);
-		gameBoard.getKeyboard().setPaddle(paddle);
-		gameBoard.setPaddle(paddle);
+		paddle = gameBoard.paddle;
 		jFrame.addKeyListener(gameBoard.getKeyboard());
 		Thread repainter = new Thread(() -> {
 			while (true) {
@@ -77,10 +71,6 @@ public class GameBoardUI extends JPanel {
 	public void paintComponent(Graphics g){ //geerbte Methode aus JPanel
 		super.paintComponent(g); //ruft geerbte Methode auf
 		g.setColor(Color.BLACK);
-		Rectangle rectangle = new Rectangle((int)(WIDTH*paddle.getXPosition()),HEIGHT-(int)(HEIGHT*paddle.getHeight()*5),(int)(WIDTH*paddle.getLength()),(int)(HEIGHT*paddle.getHeight()));
-		double d = WIDTH*paddle.getXPosition();
-		int j = (int)(WIDTH*paddle.getXPosition());
-		double x = paddle.getXPosition();
 		g.fillRect((int)(WIDTH*paddle.getXPosition() - paddle.getLength()*WIDTH*0.5),HEIGHT-100,(int)(WIDTH*paddle.getLength()),(int)(HEIGHT*paddle.getHeight()));
 		synchronized (people) {
 			for (Person person : people) {
