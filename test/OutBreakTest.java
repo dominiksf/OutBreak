@@ -32,6 +32,12 @@ class OutBreakTest {
 	 * tests if a collision is only being detected if the person is in range of the
 	 * paddle or the wall
 	 */
+	@TestSubject
+	GameBoard gameBoard = new GameBoard();
+	@Mock
+	Block block;
+	@Mock
+	Block hospital;
 
 	@Test
 	void testCollisionDetectionWithPaddle() {
@@ -179,8 +185,8 @@ class OutBreakTest {
 
 	@Test
 	void testCollisionDetectionWithBlock(){
-		GameBoard gameBoard = new GameBoard();
-		Block block = EasyMock.createMock(Block.class);
+		//GameBoard gameBoard = new GameBoard();
+		//Block block = EasyMock.createMock(Block.class);
 		Person person = new Person(true,0.5-Person.getR(),0.6,0,gameBoard);
 		EasyMock.expect(block.getPosition()).andReturn(new double[]{0.5,0.5});
 		EasyMock.expect(block.getDimensions()).andReturn(new double[]{0.2,0.1});
@@ -195,8 +201,8 @@ class OutBreakTest {
 
 	@Test
 	void testCollisionDetectionWithHospital() {
-		GameBoard gameBoard = new GameBoard();
-		Hospital hospital = EasyMock.createMock(Hospital.class);
+		//GameBoard gameBoard = new GameBoard();
+		//Hospital hospital = EasyMock.createMock(Hospital.class);
 		Person person = new Person(true, 0.5 - Person.getR(), 0.6, 0, gameBoard);
 		EasyMock.expect(hospital.getPosition()).andReturn(new double[]{0.5, 0.5});
 		EasyMock.expect(hospital.getDimensions()).andReturn(new double[]{0.2, 0.1});
