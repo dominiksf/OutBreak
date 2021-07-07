@@ -54,7 +54,7 @@ public class AudioPlayer {
 
         }
         catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println("Audiplayer stopped working: " + e.getMessage());
         }
     }
 
