@@ -82,6 +82,12 @@ public class GameBoardUI extends JPanel {
 				g.fillOval((int) (person.getxPosition() * WIDTH), (int) (person.getyPosition() * HEIGHT), (int)(PERSON_SIZE * WIDTH), (int)(PERSON_SIZE * WIDTH));
 			}
 		}
+		synchronized (blocks){
+			for (Block block:blocks) {
+				g.setColor(block.getColor());
+				g.fillRect((int) (block.position[0] * getWIDTH()), (int) (block.position[1] * getHEIGHT()), (int) (Block.dimensions[0] * getWIDTH()), (int) (Block.dimensions[1] * getHEIGHT()));
+			}
+		}
 	}
 
 	public static void main(String[] args){

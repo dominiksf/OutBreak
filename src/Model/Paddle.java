@@ -99,7 +99,7 @@ public class Paddle implements Collidable {
 
 	@Override
 	public void collide(Person person, int surfaceDirection) {
-
+		person.collide(surfaceDirection);
 		/*
 		 * 
 		 * // hier: Unterscheidung zwischen Aufprall der Person in der Mitte des Paddles

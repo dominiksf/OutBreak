@@ -1,24 +1,28 @@
 package Controller;
 
 import Model.*;
+import StrategyPattern.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static java.lang.Thread.sleep;
 
 public class GameBoard {
 
 	public static List<Person> people;
 	public List<Block> blocks;
 	public Paddle paddle;
-	public GameOutcome gameOutcome = GameOutcome.RUNNING;
+	public static GameOutcome gameOutcome = GameOutcome.RUNNING;
 	public Keyboard keyboard;
 	public AudioPlayer audioPlayer;
+	private Thread renewer;
 
-	public static final int NUMBER_OF_PERSONS = 10;
+	public static final int NUMBER_OF_PERSONS = 1;
 
 	//public AudioPlayer audioPlayer = new AudioPlayer();
-	private static final int UPDATE_PERIOD = 1000 / 60;
+	public static final int UPDATE_PERIOD = 1000 / 60;
 
 	// initial Position of the paddle - GameBoardUI ?
 	private final double initalPosX = 0.5;
@@ -27,6 +31,16 @@ public class GameBoard {
 	public void startGame() {
 		generatePeople(NUMBER_OF_PERSONS);
 		audioPlayer.playBackgroundMusic();
+		renewer = new Thread(() -> {
+			while (blocks.size() < 12){
+				blocks.add(Context.selectCreation(people,this));
+				try {
+					sleep(1000);
+				} catch (InterruptedException ignored) {
+				}
+			}
+		});
+		renewer.start();
 		/*
 		new Thread(() -> {
 			while (gameOutcome == GameOutcome.RUNNING) {
@@ -55,6 +69,7 @@ public class GameBoard {
 	public GameBoard(){
 		paddle = new Paddle(initalPosX);
 		people = new ArrayList<>();
+		blocks = new ArrayList<>();
 		keyboard = new Keyboard(paddle);
 		audioPlayer = new AudioPlayer();
 		startGame();

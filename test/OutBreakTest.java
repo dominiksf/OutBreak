@@ -1,28 +1,20 @@
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.naming.Context;
-
-import org.easymock.EasyMock;
-import org.junit.jupiter.api.Test;
-
-import Controller.*;
+import Controller.GameBoard;
 import Model.*;
 import StrategyPattern.Policy;
-import View.*;
-
-import static org.easymock.EasyMock.*;
-import static org.junit.jupiter.api.Assertions.*;
+import View.GameBoardUI;
+import org.easymock.EasyMock;
 import org.easymock.EasyMockExtension;
 import org.easymock.Mock;
 import org.easymock.TestSubject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.easymock.EasyMock.createMock;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(EasyMockExtension.class)
 class OutBreakTest {
@@ -49,10 +41,10 @@ class OutBreakTest {
 		Person person1 = new Person(false, paddle.getPosition()[0] + paddle.getLength() / 2,
 				paddle.getPosition()[1] / GameBoardUI.getHEIGHT() - Person.getR(), 0, gameBoard);
 
-		assertTrue(Collidable.dectectRectCollision(paddle, person1));
+		assertTrue(Collidable.detectRectCollision(paddle, person1));
 
 		Person person2 = new Person(false, 0, 0, 180, gameBoard);
-		assertFalse(Collidable.dectectRectCollision(paddle, person2));
+		assertFalse(Collidable.detectRectCollision(paddle, person2));
 
 	}
 
@@ -62,16 +54,16 @@ class OutBreakTest {
 	    GameBoard gameBoard = new GameBoard();
 	    
 		Person person3 = new Person(false, 1.1, 0.5, 90, gameBoard);
-		assertTrue(Collidable.dectectSideCollision(person3));
+		assertTrue(Collidable.detectSideCollision(person3));
 
 		Person person4 = new Person(false, -0.1, 0.5, 270, gameBoard);
-		assertTrue(Collidable.dectectSideCollision(person4));
+		assertTrue(Collidable.detectSideCollision(person4));
 
 		Person person5 = new Person(false, 0.9, 0.5, 90, gameBoard);
-		assertFalse(Collidable.dectectSideCollision(person5));
+		assertFalse(Collidable.detectSideCollision(person5));
 
 		Person person6 = new Person(false, 0.1, 0.5, 270, gameBoard);
-		assertFalse(Collidable.dectectSideCollision(person6));
+		assertFalse(Collidable.detectSideCollision(person6));
 	}
 
 	@Test
@@ -126,16 +118,23 @@ class OutBreakTest {
 	void testIfAllPersonsBeingMovedAfterGameStart() {
 		GameBoard gameBoard = new GameBoard();
 		gameBoard.startGame();
-
-		gameBoard.movePersons();
 		List<Person> people = gameBoard.people;
+
+		try {
+			Thread.sleep(1000/60);
+		} catch (InterruptedException ignored) {
+		}
+
 		double[] oldPositions = new double[people.size()];
 
 		for (int i = 0; i < people.size(); i++) {
 			oldPositions[i] = people.get(i).getPosition()[0];
 		}
 
-		gameBoard.movePersons();
+		try {
+			Thread.sleep(1000/60);
+		} catch (InterruptedException ignored) {
+		}
 
 		for (int i = 0; i < people.size(); i++) {
 			assertNotEquals(oldPositions[i], people.get(i).getPosition()[0]);
@@ -151,16 +150,16 @@ class OutBreakTest {
 
 		List<Person> persons = new ArrayList<>();
 
-		Block block = StrategyPattern.Context.selectCreation(persons);
-		assertEquals(House.class, block.getClass());
+//		Block block = StrategyPattern.Context.selectCreation(persons);
+//		assertEquals(House.class, block.getClass());
 
 		for (int i = 1; i <= Policy.INFECTION_LIMIT + 1; i++) {
 			persons.add(new Person(true, 0, 0, 0, gameBoard));
 		}
 
-		Block block1 = StrategyPattern.Context.selectCreation(persons);
+//		Block block1 = StrategyPattern.Context.selectCreation(persons);
 
-		assertEquals(Hospital.class, block1.getClass());
+//		assertEquals(Hospital.class, block1.getClass());
 
 	}
 
@@ -195,7 +194,7 @@ class OutBreakTest {
 			return null;
 		});
 		EasyMock.replay(block);
-		Collidable.dectectRectCollision(block, person);
+		Collidable.detectRectCollision(block, person);
 		assertEquals(180,person.getDirection());
 	}
 
@@ -212,7 +211,7 @@ class OutBreakTest {
 			return null;
 		});
 		EasyMock.replay(hospital);
-		Collidable.dectectRectCollision(hospital, person);
+		Collidable.detectRectCollision(hospital, person);
 		assertFalse(person.isInfected());
 		assertEquals(180,person.getDirection());
 	}

@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.Vector;
+import java.awt.*;
 
 public abstract class Block implements Collidable{
 
@@ -9,26 +9,22 @@ public abstract class Block implements Collidable{
 	// Strategie bei Hospital: Person aufnehmen und nach bestimmter Zeit wieder freilassen
 	// Strategie bei House: Bewohner infizieren ?
 
-	public Vector position;
-	public int inhabitants;
+	public double[] position;
+	public static final double[] dimensions = new double[]{0.1, 0.05};
 
-	
-	public void addPerson() {
-		
-	}
+    public abstract Color getColor();
 
 	@Override
 	public double[] getDimensions() {
-		return new double[0];
+		return dimensions;
 	}
 
 	@Override
 	public double[] getPosition() {
-		return new double[0];
+		return position;
 	}
 
-	@Override
-	public void collide(Person person, int surfaceDirection) {
-
+	public Block(double[] position) {
+		this.position = position;
 	}
 }
