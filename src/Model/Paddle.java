@@ -1,6 +1,5 @@
 package Model;
 
-
 import View.GameBoardUI;
 
 public class Paddle implements Collidable {
@@ -25,27 +24,36 @@ public class Paddle implements Collidable {
 	public double getLength() {
 		return length;
 	}
+
 	public double getHeight() {
 		return height;
 	}
+
 	public double getXPosition() {
 		return xPosition;
 	}
 
-	/** Constructor
-	 * @param xPosition initial Paddle position in relative declaration (between 0 and 1)
-	 * @param length relative paddle length (between 0 and 1, where 1 matches the width of the gameboard)
-	 * @param height relative paddle height (between 0 and 1, where 1 matches the height of the gameboard)
+	/**
+	 * Constructor
+	 * 
+	 * @param xPosition initial Paddle position in relative declaration (between 0
+	 *                  and 1)
+	 * @param length    relative paddle length (between 0 and 1, where 1 matches the
+	 *                  width of the gameboard)
+	 * @param height    relative paddle height (between 0 and 1, where 1 matches the
+	 *                  height of the gameboard)
 	 */
 	public Paddle(double xPosition, double length, double height) {
 		this.xPosition = xPosition;
-		//this.length = length;
-		//this.height = height;
+		// this.length = length;
+		// this.height = height;
 	}
 
 	/**
 	 * Constructor with default values
-	 * @param xPosition initial Paddle position in relative declaration (between 0 and 1)
+	 * 
+	 * @param xPosition initial Paddle position in relative declaration (between 0
+	 *                  and 1)
 	 */
 	public Paddle(double xPosition) {
 		new Paddle(xPosition, DEFAULT_LENGTH, DEFAULT_HEIGHT);
@@ -60,7 +68,9 @@ public class Paddle implements Collidable {
 	}
 
 	/**
-	 * Sets the paddle's position and makes sure that the paddle cannot be placed outside the boundaries
+	 * Sets the paddle's position and makes sure that the paddle cannot be placed
+	 * outside the boundaries
+	 * 
 	 * @param x
 	 */
 	private void setPosition(double x) {
@@ -79,17 +89,32 @@ public class Paddle implements Collidable {
 
 	@Override
 	public double[] getDimensions() {
-		return new double[]{length,height};
+		return new double[] { length, height };
 	}
 
 	@Override
 	public double[] getPosition() {
-		return new double[]{xPosition - 0.1, GameBoardUI.getHEIGHT()-100};
+		return new double[] { xPosition - 0.1, GameBoardUI.getHEIGHT() - 100 };
 	}
 
 	@Override
 	public void collide(Person person, int surfaceDirection) {
-		person.collide(surfaceDirection);
+
+		/*
+		 * 
+		 * // hier: Unterscheidung zwischen Aufprall der Person in der Mitte des Paddles
+		 * oder nicht
+		 * 
+		 * // Mitte des Feldes richtig?? if(person.getPosition()[0] >
+		 * this.getPosition()[0] + (this.length / 3) || person.getPosition()[0] <
+		 * this.getPosition()[0] + (this.length / 3) * 2) {
+		 * 
+		 * // bisher kein Setter vorhanden // person.setDirection(0);
+		 * 
+		 * } else { person.collide(surfaceDirection); }
+		 * 
+		 * // alte Funktionalität person.collide(surfaceDirection);
+		 * 
+		 */
 	}
 }
-
