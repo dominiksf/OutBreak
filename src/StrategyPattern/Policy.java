@@ -1,11 +1,12 @@
 package StrategyPattern;
 
-import java.util.List;
 import Model.Person;
+
+import java.util.List;
 
 public class Policy {
     
-public static final int INFECTION_LIMIT = 100;
+public static final int INFECTION_LIMIT = 0;
 
 
    public static boolean isInfectionLimitReached(List<Person> persons) {

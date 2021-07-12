@@ -3,6 +3,7 @@ package Model;
 import Controller.GameBoard;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,9 +19,13 @@ public class Hospital extends Block{
 
 	private final long stayingTime = 4000000000L;
 
+	private final Object monitor = new Object();
+
 
 	public void release() {
-		entryTimes.remove(0);
+		synchronized (monitor) {
+			entryTimes.remove(0);
+		}
 		Person person = new Person(false, position[0] + 0.1, position[1] + 0.1 + Person.getR(), (new Random()).nextInt(4)* 90 + 45, gameBoard);
 		GameBoard.people.add(person);
 	}
@@ -30,27 +35,30 @@ public class Hospital extends Block{
 		if(!person.isInfected()){
 			person.collide(surfaceDirection);
 		} else {
-			entryTimes.add(System.nanoTime());
-			GameBoard.people.remove(person);
+			synchronized (monitor) {
+				entryTimes.add(System.nanoTime());
+			}
+			gameBoard.deletePerson(person);
 		}
 	}
 
 	public Hospital(double[] position, GameBoard gameBoard) {
 		super(position);
 		this.gameBoard = gameBoard;
+		entryTimes = new ArrayList<>();
 		new Thread(() -> {
 			while (GameBoard.gameOutcome == GameOutcome.RUNNING){
-				for(long l:entryTimes){
-					if(System.nanoTime() - l > stayingTime){
-						release();
-					}
+					for (int i = 0; i < entryTimes.size(); i++) {
+						if (System.nanoTime() - entryTimes.get(i) > stayingTime) {
+							release();
+						}
 				}
 				try {
 					sleep(GameBoard.UPDATE_PERIOD);
 				} catch (InterruptedException ignored) {
 				}
 			}
-		});
+		}).start();
 	}
 
 	@Override

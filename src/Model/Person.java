@@ -12,6 +12,8 @@ public class Person {
 	private double stepLength = 0.01;
 	private final static double rad = 0.015625;
 	private GameBoard gameBoard;
+	private boolean running;
+	private static final Object monitor = new Object();
 	/**
 	 * The unit of direction is degree
 	 * 0 degree = 360 degree = towards the top
@@ -34,11 +36,17 @@ public class Person {
 		this.yPosition = yPosition;
 		this.direction = direction % 360;
 		this.gameBoard = gameBoard;
+		running = true;
 		new Thread(() -> {
-			while (true) {
+			while (running) {
 				makeStep();
 				Collidable.detectSideCollision(this);
-				Collidable.detectRectCollision(gameBoard.paddle,this);
+				Collidable.detectRectCollision(gameBoard.paddle, this);
+				synchronized (monitor) {
+					for (Block block : gameBoard.blocks) {
+						Collidable.detectRectCollision(block, this);
+					}
+				}
 				try {
 					Thread.sleep(1000 / 60);
 				} catch (InterruptedException e) {
@@ -46,6 +54,10 @@ public class Person {
 				}
 			}
 		}).start();
+	}
+
+	public void endThread(){
+		running = false;
 	}
 
 	/**

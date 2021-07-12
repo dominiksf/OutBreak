@@ -94,7 +94,7 @@ public class Paddle implements Collidable {
 
 	@Override
 	public double[] getPosition() {
-		return new double[] { xPosition - 0.1, GameBoardUI.getHEIGHT() - 100 };
+		return new double[] { xPosition - 0.1, (double)(GameBoardUI.getHEIGHT() - 100) / GameBoardUI.getHEIGHT() };
 	}
 
 	@Override

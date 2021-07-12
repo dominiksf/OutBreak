@@ -1,7 +1,6 @@
 package Model;
 
 import Controller.GameBoard;
-import View.GameBoardUI;
 
 public interface Collidable {
 
@@ -27,8 +26,8 @@ public interface Collidable {
         if (isInRange(collider.getPosition()[0],
                 collider.getPosition()[0] + collider.getDimensions()[0],
                 person.getxPosition() - Person.getR(),person.getxPosition() + Person.getR()) &&
-                isInRange(collider.getPosition()[1]/ GameBoardUI.getHEIGHT(),
-                        collider.getPosition()[1]/ GameBoardUI.getHEIGHT() - collider.getDimensions()[1],
+                isInRange(collider.getPosition()[1],
+                        collider.getPosition()[1] - collider.getDimensions()[1],
                         test,test2)) { //testet ob kollision vorliegt
             if(straitCollision(collider,person)){
                 return true;
@@ -54,7 +53,7 @@ public interface Collidable {
                             q = 1;
                         }
                     }
-                    collider.collide(person, calcDirection(new double[]{collider.getPosition()[0] + collider.getDimensions()[0] * q, collider.getPosition()[1]/GameBoardUI.getHEIGHT() + collider.getDimensions()[1] * o}, person, i));
+                    collider.collide(person, calcDirection(new double[]{collider.getPosition()[0] + collider.getDimensions()[0] * q, collider.getPosition()[1] + collider.getDimensions()[1] * o}, person, i));
                     return true;
                 }
             }

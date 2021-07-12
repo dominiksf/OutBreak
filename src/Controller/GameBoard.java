@@ -35,35 +35,37 @@ public class GameBoard {
 			while (blocks.size() < 12){
 				blocks.add(Context.selectCreation(people,this));
 				try {
-					sleep(1000);
+					sleep(10000);
 				} catch (InterruptedException ignored) {
 				}
 			}
 		});
 		renewer.start();
-		/*
-		new Thread(() -> {
-			while (gameOutcome == GameOutcome.RUNNING) {
-				long startTime = System.nanoTime();
-				for(Person person:people) {
-					person.makeStep();
-					Collidable.detectSideCollision(person);
-					Collidable.detectRectCollision(paddle, person);
-					try {
-						Thread.sleep(UPDATE_PERIOD - (System.nanoTime() - startTime)/1000000000);
-					} catch (Exception ignored) {
-					}
+		Thread generator = new Thread(() -> {
+			while (gameOutcome == GameOutcome.RUNNING){
+				if(people.size() == 0){
+					generatePeople(1);
+				}
+				try {
+					sleep(UPDATE_PERIOD);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
-		}).start();
-		 */
+		});
+		generator.start();
 	}
 
-	private void generatePeople(int n) {
+	public void generatePeople(int n) {
 	     for(int i = 0; i < n; i++) {
 	     	boolean infected = Math.random() < 0.5;
-	     	people.add(new Person(infected, Math.random(), Math.random(), (new Random()).nextInt(4) * 90 + 45,this));
+			 people.add(new Person(infected, 0.1 + Math.random()*8/10,0.7, (new Random()).nextInt(4) * 90 + 45,this));
 		 }
+	}
+
+	public void deletePerson(Person person){
+		person.endThread();
+		people.remove(person);
 	}
 
 	public GameBoard(){

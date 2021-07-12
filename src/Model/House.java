@@ -41,6 +41,7 @@ public class House extends Block implements HouseInterface {
 			GameBoard.people.add(person3);
 			GameBoard.people.add(person4);
 
+			inhabitantsCounter = 0;
 			this.infected = false;
 
 	}
@@ -80,11 +81,16 @@ public class House extends Block implements HouseInterface {
 	@Override
 	public void collide(Person person, int surfaceDirection) {
 
+		person.collide(surfaceDirection);
 		if (hasVacancy()) {
-			GameBoard.people.remove(person);
+			gameBoard.deletePerson(person);
 			this.addPerson(person.isInfected());
 		} else {
-			person.collide(surfaceDirection);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			this.releaseAll();
 		}
 
