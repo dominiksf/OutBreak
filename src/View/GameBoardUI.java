@@ -32,6 +32,7 @@ public class GameBoardUI extends JPanel {
 	private List<Person> people;
 	private List<Block> blocks;
 	private JFrame jFrame;
+	private JLabel infectedCounter;
 
 	/**
 	 * Constructor
@@ -51,9 +52,14 @@ public class GameBoardUI extends JPanel {
 		jFrame.setVisible(true);
 		paddle = gameBoard.paddle;
 		jFrame.addKeyListener(gameBoard.getKeyboard());
+		infectedCounter = new JLabel("" + gameBoard.infectedCounter.calc());
+		infectedCounter.setBounds(50,50,50,50);
+		infectedCounter.setVisible(true);
+		jFrame.add(infectedCounter);
 		Thread repainter = new Thread(() -> {
 			while (true) {
 				repaint();
+				infectedCounter.setText("" + gameBoard.infectedCounter.calc());
 				try {
 					Thread.sleep(1000 / 60);
 				} catch (InterruptedException e) {
@@ -62,6 +68,7 @@ public class GameBoardUI extends JPanel {
 			}
 		});
 		repainter.start();
+
 	}
 
 	/**

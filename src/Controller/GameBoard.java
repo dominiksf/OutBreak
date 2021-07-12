@@ -18,6 +18,7 @@ public class GameBoard {
 	public Keyboard keyboard;
 	public AudioPlayer audioPlayer;
 	private Thread renewer;
+	public InfectedCounter infectedCounter;
 
 	public static final int NUMBER_OF_PERSONS = 1;
 
@@ -74,6 +75,7 @@ public class GameBoard {
 		blocks = new ArrayList<>();
 		keyboard = new Keyboard(paddle);
 		audioPlayer = new AudioPlayer();
+		infectedCounter = new InfectedCounter(people);
 		startGame();
 	}
 
