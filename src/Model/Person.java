@@ -13,7 +13,7 @@ public class Person {
 	private final static double rad = 0.015625;
 	private GameBoard gameBoard;
 	private boolean running;
-	private static final Object monitor = new Object();
+	public static final Object monitor = new Object();
 	/**
 	 * The unit of direction is degree
 	 * 0 degree = 360 degree = towards the top
