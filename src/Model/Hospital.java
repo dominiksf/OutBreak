@@ -5,12 +5,11 @@ import Controller.GameBoard;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static java.lang.Thread.sleep;
 
 public class Hospital extends Block{
-	
+
 	public List<Long> entryTimes;
 
 	private final GameBoard gameBoard;
@@ -26,8 +25,7 @@ public class Hospital extends Block{
 		synchronized (monitor) {
 			entryTimes.remove(0);
 		}
-		Person person = new Person(false, position[0] + 0.1, position[1] + 0.1 + Person.getR(), (new Random()).nextInt(4)* 90 + 45, gameBoard);
-		GameBoard.people.add(person);
+		gameBoard.generatePeople(1,false);
 	}
 
 	@Override

@@ -62,8 +62,14 @@ public class GameBoard {
 	public void generatePeople(int n) {
 	     for(int i = 0; i < n; i++) {
 	     	boolean infected = Math.random() < 0.5;
-			 people.add(new Person(infected, 0.1 + Math.random()*8/10,0.7, (new Random()).nextInt(4) * 90 + 45,this));
+	     	generatePeople(1, infected);
 		 }
+	}
+
+	public void generatePeople(int n, boolean infected) {
+		for(int i = 0; i < n; i++) {
+			people.add(new Person(infected, 0.1 + Math.random()*8/10,0.7, (new Random()).nextInt(4) * 90 + 45,this));
+		}
 	}
 
 	public void deletePerson(Person person){
