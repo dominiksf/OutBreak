@@ -52,10 +52,11 @@ public class GameBoardUI extends JPanel {
 		jFrame.setVisible(true);
 		paddle = gameBoard.paddle;
 		jFrame.addKeyListener(gameBoard.getKeyboard());
-		infectedCounter = new JLabel("" + gameBoard.infectedCounter.calc());
-		infectedCounter.setBounds(50,50,50,50);
+		infectedCounter = new JLabel();
+		infectedCounter.setBounds(getWidth()/2,50,50,8);
+		infectedCounter.setText("" + gameBoard.infectedCounter.calc());
 		infectedCounter.setVisible(true);
-		jFrame.add(infectedCounter);
+		add(infectedCounter);
 		Thread repainter = new Thread(() -> {
 			while (true) {
 				repaint();
@@ -77,8 +78,12 @@ public class GameBoardUI extends JPanel {
 	 */
 	public void paintComponent(Graphics g){ //geerbte Methode aus JPanel
 		super.paintComponent(g); //ruft geerbte Methode auf
-		g.setColor(Color.BLACK);
-		g.fillRect((int)(WIDTH*paddle.getXPosition() - paddle.getLength()*WIDTH*0.5),HEIGHT-100,(int)(WIDTH*paddle.getLength()),(int)(HEIGHT*paddle.getHeight()));
+		g.setColor(PADDLE_COLOR);
+		g.fillRect((int)(WIDTH*paddle.getXPosition() - paddle.getLength()*WIDTH*0.5),HEIGHT-paddle.offset,(int)(WIDTH*paddle.getLength()),(int)(HEIGHT*paddle.getHeight()));
+		if(gameBoard.multiplayer){
+			g.fillRect((int)(WIDTH*gameBoard.paddle2.getXPosition() - gameBoard.paddle2.getLength()*WIDTH*0.5),HEIGHT-gameBoard.paddle2.offset,
+					(int)(WIDTH*gameBoard.paddle2.getLength()),(int)(HEIGHT*gameBoard.paddle2.getHeight()));
+		}
 		synchronized (people) {
 			for (Person person : people) {
 				if (person.isInfected()) {

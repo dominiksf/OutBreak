@@ -10,8 +10,9 @@ public class Paddle implements Collidable {
 	private double length = 0.2;
 	private double height = 0.01;
 	private static final double DEFAULT_LENGTH = 0.2;
-	private static final double DEFAULT_HEIGHT = 0.01;
+	private static final int DEFAULT_HEIGHT = 100;
 	private static final double PADDLE_STEP_LENGTH = 0.05;
+	public final int offset;
 
 	/**
 	 * XPosition is the position of the paddle's middle
@@ -43,10 +44,9 @@ public class Paddle implements Collidable {
 	 * @param height    relative paddle height (between 0 and 1, where 1 matches the
 	 *                  height of the gameboard)
 	 */
-	public Paddle(double xPosition, double length, double height) {
+	public Paddle(double xPosition, int height) {
 		this.xPosition = xPosition;
-		// this.length = length;
-		// this.height = height;
+		offset = height;
 	}
 
 	/**
@@ -56,7 +56,8 @@ public class Paddle implements Collidable {
 	 *                  and 1)
 	 */
 	public Paddle(double xPosition) {
-		new Paddle(xPosition, DEFAULT_LENGTH, DEFAULT_HEIGHT);
+		this.xPosition = xPosition;
+		offset = DEFAULT_HEIGHT;
 	}
 
 	public void moveLeft() {
@@ -94,7 +95,7 @@ public class Paddle implements Collidable {
 
 	@Override
 	public double[] getPosition() {
-		return new double[] { xPosition - 0.1, (double)(GameBoardUI.getHEIGHT() - 100) / GameBoardUI.getHEIGHT() };
+		return new double[] { xPosition - 0.1, (double)(GameBoardUI.getHEIGHT() - offset) / GameBoardUI.getHEIGHT() };
 	}
 
 	@Override

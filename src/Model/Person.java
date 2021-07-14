@@ -42,6 +42,9 @@ public class Person {
 				makeStep();
 				Collidable.detectSideCollision(this);
 				Collidable.detectRectCollision(gameBoard.paddle, this);
+				if(gameBoard.multiplayer){
+					Collidable.detectRectCollision(gameBoard.paddle2, this);
+				}
 				synchronized (monitor) {
 					for (Block block : gameBoard.blocks) {
 						Collidable.detectRectCollision(block, this);
@@ -96,11 +99,6 @@ public class Person {
 		this.infected = infected;
 		if (infected) gameBoard.audioPlayer.makeInfectionSound();
 	}
-	/*
-	public void setDirection(double direction) {
-		this.direction = direction;
-	}
-	 */
 
 	/**
 	 * Lets the person move one step forward

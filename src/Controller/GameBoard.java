@@ -14,11 +14,13 @@ public class GameBoard {
 	public static List<Person> people;
 	public List<Block> blocks;
 	public Paddle paddle;
+	public Paddle paddle2;
 	public static GameOutcome gameOutcome = GameOutcome.RUNNING;
 	public Keyboard keyboard;
 	public AudioPlayer audioPlayer;
 	private Thread renewer;
 	public InfectedCounter infectedCounter;
+	public boolean multiplayer;
 
 	public static final int NUMBER_OF_PERSONS = 1;
 
@@ -69,13 +71,20 @@ public class GameBoard {
 		people.remove(person);
 	}
 
+	public void multiplayer(){
+		paddle2 = new Paddle(initalPosX, 150);
+		keyboard.setPaddle2(paddle2);
+		multiplayer = true;
+	}
+
 	public GameBoard(){
 		paddle = new Paddle(initalPosX);
 		people = new ArrayList<>();
 		blocks = new ArrayList<>();
-		keyboard = new Keyboard(paddle);
+		keyboard = new Keyboard(paddle, this);
 		audioPlayer = new AudioPlayer();
-		infectedCounter = new InfectedCounter(people);
+		infectedCounter = new InfectedCounter(people, blocks);
+		multiplayer = false;
 		startGame();
 	}
 
