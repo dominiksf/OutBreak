@@ -8,6 +8,14 @@ import java.util.Random;
 public class House extends Block implements HouseInterface {
 
 	public int inhabitantsCounter;
+	public int getInhabitantsCounter() {
+		return inhabitantsCounter;
+	}
+
+	public void setInhabitantsCounter(int inhabitantsCounter) {
+		this.inhabitantsCounter = inhabitantsCounter;
+	}
+
 	public int capacity;
 	public boolean infected;
 	public final static Color infectedColor = Color.RED;
