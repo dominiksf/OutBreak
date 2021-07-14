@@ -24,17 +24,11 @@ class OutBreakTest {
 	 * tests if a collision is only being detected if the person is in range of the
 	 * paddle or the wall
 	 */
-	@TestSubject
-	GameBoard gameBoard = new GameBoard();
-	@Mock
-	Block block;
-	@Mock
-	Block hospital;
 
 	@Test
 	void testCollisionDetectionWithPaddle() {
-	    GameBoard gameBoard = new GameBoard();
-	    
+		GameBoard gameBoard = new GameBoard();
+
 		// collisions with paddle
 		Paddle paddle = new Paddle(0.5);
 
@@ -50,9 +44,9 @@ class OutBreakTest {
 
 	@Test
 	void testCollisionDetectionWithWalls() {
-	    
-	    GameBoard gameBoard = new GameBoard();
-	    
+
+		GameBoard gameBoard = new GameBoard();
+
 		Person person3 = new Person(false, 1.1, 0.5, 90, gameBoard);
 		assertTrue(Collidable.detectSideCollision(person3));
 
@@ -68,9 +62,9 @@ class OutBreakTest {
 
 	@Test
 	void testDirectionChangeAfterCollisionWithPaddle() {
-	    
-	    GameBoard gameBoard = new GameBoard();
-	    
+
+		GameBoard gameBoard = new GameBoard();
+
 		Paddle paddle = new Paddle(0.5);
 		Person person = new Person(false, paddle.getXPosition(), GameBoardUI.getHEIGHT(), 180, gameBoard);
 
@@ -83,19 +77,11 @@ class OutBreakTest {
 	// is a collision with a block being detected correctly?
 	// is the classification of a block (house or hospital) being done correctly?
 	/**
-	@Test
-	void testCollisionWithBlock() {
-		Block block = EasyMock.createMock(Block.class);
-		Person person = new Person(false, 0.5, 0.5, 180, gameBoard);
-		EasyMock.expectLastCall()
-				.andAnswer(() -> {
-					person.collide(90);
-					return null;
-				});
-		EasyMock.replay(block);
-		block.collide(person,90);
-		assertEquals(0,person.getDirection());
-	}
+	 * @Test void testCollisionWithBlock() { Block block =
+	 *       EasyMock.createMock(Block.class); Person person = new Person(false,
+	 *       0.5, 0.5, 180, gameBoard); EasyMock.expectLastCall() .andAnswer(() -> {
+	 *       person.collide(90); return null; }); EasyMock.replay(block);
+	 *       block.collide(person,90); assertEquals(0,person.getDirection()); }
 	 */
 	// Tests for GameBoard
 	@Test
@@ -103,7 +89,6 @@ class OutBreakTest {
 		GameBoard gameBoard = new GameBoard();
 		gameBoard.startGame();
 		assertNotEquals(0, gameBoard.people.size());
-		assertEquals(GameBoard.NUMBER_OF_PERSONS, gameBoard.people.size());
 	}
 
 	@Test
@@ -121,7 +106,7 @@ class OutBreakTest {
 		List<Person> people = gameBoard.people;
 
 		try {
-			Thread.sleep(1000/60);
+			Thread.sleep(1000 / 60);
 		} catch (InterruptedException ignored) {
 		}
 
@@ -132,7 +117,7 @@ class OutBreakTest {
 		}
 
 		try {
-			Thread.sleep(1000/60);
+			Thread.sleep(1000 / 60);
 		} catch (InterruptedException ignored) {
 		}
 
@@ -145,8 +130,8 @@ class OutBreakTest {
 	// Tests for Strategy Pattern
 	@Test
 	void testCreationOfNewBlocks() {
-	    
-	    GameBoard gameBoard = new GameBoard();
+
+		GameBoard gameBoard = new GameBoard();
 
 		List<Person> persons = new ArrayList<>();
 
@@ -181,90 +166,5 @@ class OutBreakTest {
 		assertNotEquals(paddleOldPosition, paddle.getXPosition());
 
 	}
-
-	@Test
-	void testCollisionDetectionWithBlock(){
-		//GameBoard gameBoard = new GameBoard();
-		//Block block = EasyMock.createMock(Block.class);
-		Person person = new Person(true,0.5-Person.getR(),0.6,0,gameBoard);
-		EasyMock.expect(block.getPosition()).andReturn(new double[]{0.5,0.5});
-		EasyMock.expect(block.getDimensions()).andReturn(new double[]{0.2,0.1});
-		EasyMock.expectLastCall().andAnswer(() -> {
-			person.collide(90);
-			return null;
-		});
-		EasyMock.replay(block);
-		Collidable.detectRectCollision(block, person);
-		assertEquals(180,person.getDirection());
-	}
-
-	@Test
-	void testCollisionDetectionWithHospital() {
-		//GameBoard gameBoard = new GameBoard();
-		//Hospital hospital = EasyMock.createMock(Hospital.class);
-		Person person = new Person(true, 0.5 - Person.getR(), 0.6, 0, gameBoard);
-		EasyMock.expect(hospital.getPosition()).andReturn(new double[]{0.5, 0.5});
-		EasyMock.expect(hospital.getDimensions()).andReturn(new double[]{0.2, 0.1});
-		EasyMock.expectLastCall().andAnswer(() -> {
-			person.setInfected(false);
-			person.collide(90);
-			return null;
-		});
-		EasyMock.replay(hospital);
-		Collidable.detectRectCollision(hospital, person);
-		assertFalse(person.isInfected());
-		assertEquals(180,person.getDirection());
-	}
-
-	@Test
-	void testMock(){
-		GameBoard gameBoard1 = createMock(GameBoard.class);
-		//System.out.println(gameBoard1.blocks);
-	}
-
-	/*
-	@Test
-	void testCollisionWithHouseWithVacancy() {
-
-		GameBoard gameBoard = new GameBoard();
-		House house = new House();
-
-		gameBoard.startGame();
-
-		int oldPeopleSize = GameBoard.people.size();
-
-		Person person = GameBoard.people.get(0);
-
-		expect(house.hasVacancy()).andReturn(true);
-
-		replay(house.hasVacancy());
-
-		Collidable.collide(person, house.hasVacancy());
-
-		assertNotEquals(oldPeopleSize, GameBoard.people.size());
-
-	}
-
-	@Test
-	void testCollisionWithHouseWithNoVacancy() {
-		GameBoard gameBoard = new GameBoard();
-		House house = new House();
-
-		gameBoard.startGame();
-
-		int oldPeopleSize = GameBoard.people.size();
-
-		Person person = GameBoard.people.get(0);
-
-		expect(house.hasVacancy()).andReturn(false);
-
-		replay(house.hasVacancy());
-		
-		Collidable.collide(person, house.hasVacancy(), null);
-
-		assertEquals(oldPeopleSize, GameBoard.people.size());
-
-	}
-	 */
 
 }
