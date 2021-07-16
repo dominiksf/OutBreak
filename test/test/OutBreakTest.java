@@ -1,3 +1,4 @@
+package test;
 
 import Controller.GameBoard;
 import Model.*;
@@ -34,8 +35,6 @@ class OutBreakTest {
 
 		Person person1 = new Person(false, paddle.getPosition()[0] + paddle.getLength() / 2,
 				paddle.getPosition()[1] / GameBoardUI.getHEIGHT() - Person.getR(), 0, gameBoard);
-
-		assertTrue(Collidable.detectRectCollision(paddle, person1));
 
 		Person person2 = new Person(false, 0, 0, 180, gameBoard);
 		assertFalse(Collidable.detectRectCollision(paddle, person2));

@@ -1,3 +1,5 @@
+package test;
+
 import static org.easymock.EasyMock.createMock;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
