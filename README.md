@@ -1,5 +1,5 @@
 # OutBreak
-A simple single and multiplayer game developed during the EIST Course with 3 other students.
+A simple single and multiplayer game developed during the EIST Course 2021 with 3 other students.
 
 Main features:
 - simple and intuitive GUI
