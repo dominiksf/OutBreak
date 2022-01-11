@@ -17,7 +17,7 @@ public static final int INFECTION_LIMIT = 0;
           }
         }
     
-        if (currentlyInfected > INFECTION_LIMIT) {
+        if(currentlyInfected > INFECTION_LIMIT) {
           return true;
         } else {
           return false;

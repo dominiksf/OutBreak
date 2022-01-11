@@ -76,6 +76,7 @@ public class GameBoardUI extends JPanel {
 	 * Draws everything (people, blocks and the paddle) on the GameBoard.
 	 * Does not update automatically, so it has to be called again in the desired update interval.
 	 */
+
 	public void paintComponent(Graphics g){ //geerbte Methode aus JPanel
 		super.paintComponent(g); //ruft geerbte Methode auf
 		g.setColor(PADDLE_COLOR);

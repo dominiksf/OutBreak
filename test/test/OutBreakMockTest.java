@@ -61,48 +61,8 @@ public class OutBreakMockTest {
 	@Test
 	void testMock() {
 		GameBoard gameBoard1 = createMock(GameBoard.class);
-		// System.out.println(gameBoard1.blocks);
 	}
 
-	/*
-	 * @Test void testCollisionWithHouseWithVacancy() {
-	 * 
-	 * GameBoard gameBoard = new GameBoard(); House house = new House();
-	 * 
-	 * gameBoard.startGame();
-	 * 
-	 * int oldPeopleSize = GameBoard.people.size();
-	 * 
-	 * Person person = GameBoard.people.get(0);
-	 * 
-	 * expect(house.hasVacancy()).andReturn(true);
-	 * 
-	 * replay(house.hasVacancy());
-	 * 
-	 * Collidable.collide(person, house.hasVacancy());
-	 * 
-	 * assertNotEquals(oldPeopleSize, GameBoard.people.size());
-	 * 
-	 * }
-	 * 
-	 * @Test void testCollisionWithHouseWithNoVacancy() { GameBoard gameBoard = new
-	 * GameBoard(); House house = new House();
-	 * 
-	 * gameBoard.startGame();
-	 * 
-	 * int oldPeopleSize = GameBoard.people.size();
-	 * 
-	 * Person person = GameBoard.people.get(0);
-	 * 
-	 * expect(house.hasVacancy()).andReturn(false);
-	 * 
-	 * replay(house.hasVacancy());
-	 * 
-	 * Collidable.collide(person, house.hasVacancy(), null);
-	 * 
-	 * assertEquals(oldPeopleSize, GameBoard.people.size());
-	 * 
-	 * }
-	 */
+
 
 }

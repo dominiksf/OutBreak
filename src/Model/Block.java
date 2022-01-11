@@ -4,8 +4,8 @@ import java.awt.*;
 
 public abstract class Block implements Collidable{
 
-	// mögliches Pattern => StrategyPattern
-	// Je nach dem, auf welche Blockart die Person trifft, wird unterschiedliche Strategie ausgeführt
+	// StrategyPattern
+	// Je nach dem, auf welche Blockart die Person trifft, wird eine unterschiedliche Strategie ausgeführt
 	// Strategie bei Hospital: Person aufnehmen und nach bestimmter Zeit wieder freilassen
 	// Strategie bei House: Bewohner infizieren ?
 

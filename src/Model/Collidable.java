@@ -25,15 +25,16 @@ public interface Collidable {
         double test2 = person.getyPosition() + Person.getR();
         if (isInRange(collider.getPosition()[0],
                 collider.getPosition()[0] + collider.getDimensions()[0],
-                person.getxPosition() - Person.getR(),person.getxPosition() + Person.getR()) &&
+                person.getxPosition() - Person.getR(), person.getxPosition() + Person.getR()) &&
                 isInRange(collider.getPosition()[1],
                         collider.getPosition()[1] - collider.getDimensions()[1],
-                        test,test2)) { //testet ob kollision vorliegt
-            if(straitCollision(collider,person)){
+                        test, test2)) { //testet, ob Kollision vorliegt
+            if (straitCollision(collider, person)) {
                 return true;
             }
-            /**
-             * rechnet aus welche ecke des rechtecks relevant für die berchnug ist
+
+            /*
+             * Rechnet aus, welche ecke des rechtecks relevant für die berechnug ist
              * sollte die person von links unten kommen (d = 45) dann ist nur die untere linke ecke relevant
              * um zu berechnen ob die person nach unten under nach rechts abgelenkt wird
              */
@@ -68,7 +69,7 @@ public interface Collidable {
         for (int i = 0; i < 4; i++) { // rechte wand = 0 dann gegen den Uhrzeigersinn
             s -= d; // d sorgt dafür das abwechselnd zwischen 0 und 1 iteriet wird
             d = -d; // iteriert zwischen -1 und 1
-            switch (i){
+            switch (i) {
                 case 0, 3 -> p = -1;
                 case 1, 2 -> p = 1;
             }
@@ -77,7 +78,7 @@ public interface Collidable {
                     person.getPosition()[s] + p * Person.getR() < 0
                             || person.getPosition()[s] + p * Person.getR() > 1
             ) { //kollision liegt vor
-                if(straitCollision(new Collidable() {
+                if (straitCollision(new Collidable() {
                     @Override
                     public double[] getDimensions() {
                         return new double[0];
@@ -92,10 +93,10 @@ public interface Collidable {
                     public void collide(Person person, int surfaceDirection) {
                         person.collide(surfaceDirection);
                     }
-                }, person)){
+                }, person)) {
                     return true;
                 }
-                person.collide(Math.abs(270 - 90*i));
+                person.collide(Math.abs(270 - 90 * i));
                 return true;
             }
 
@@ -103,7 +104,7 @@ public interface Collidable {
         return false;
     }
 
-    static boolean straitCollision(Collidable collider, Person person){
+    static boolean straitCollision(Collidable collider, Person person) {
         switch ((int) person.getDirection()) { // bei eindimensionaler bewegung klar
             case 0, 180 -> {
                 collider.collide(person, 90); //direction legt richtung des Vectors fest an dem die personen richtung gespiegelt werden muss
@@ -123,8 +124,8 @@ public interface Collidable {
             a = b;
             b = tempA;
         }
-        for(double i:reference) {
-            if(a <= i && b >= i){
+        for (double i : reference) {
+            if (a <= i && b >= i) {
                 return true;
             }
         }
@@ -160,15 +161,15 @@ public interface Collidable {
         }
         return 90;
     }
-    
+
     public static void collide(Person person, boolean hasVacancy, Block house) {
-        
+
         if (hasVacancy) {
-			GameBoard.people.remove(person);
-		} else {
-			Collidable.detectRectCollision(house, person);
-		}
-        
+            GameBoard.people.remove(person);
+        } else {
+            Collidable.detectRectCollision(house, person);
+        }
+
     }
 
 }
